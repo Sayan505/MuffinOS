@@ -16,11 +16,11 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
     gBS->LocateProtocol(&efi_gop_guid, NULL, (VOID **)&efi_gfx);
 
     // store it
-    stiletto.bootprot_video.pFrame_buffer_base = (uint64_t *)efi_gfx->Mode->FrameBufferBase;
-    stiletto.bootprot_video.frame_buffer_sz    = (uint64_t)  efi_gfx->Mode->FrameBufferSize;
-    stiletto.bootprot_video.horiz              = (uint32_t)  efi_gfx->Mode->Info->HorizontalResolution;
-    stiletto.bootprot_video.vert               = (uint32_t)  efi_gfx->Mode->Info->VerticalResolution;
-    stiletto.bootprot_video.ppsl               = (uint32_t)  efi_gfx->Mode->Info->PixelsPerScanLine;
+    stiletto.stiletto_video.pFrame_buffer_base = (uint64_t *)efi_gfx->Mode->FrameBufferBase;
+    stiletto.stiletto_video.frame_buffer_sz    = (uint64_t)  efi_gfx->Mode->FrameBufferSize;
+    stiletto.stiletto_video.horiz              = (uint32_t)  efi_gfx->Mode->Info->HorizontalResolution;
+    stiletto.stiletto_video.vert               = (uint32_t)  efi_gfx->Mode->Info->VerticalResolution;
+    stiletto.stiletto_video.ppsl               = (uint32_t)  efi_gfx->Mode->Info->PixelsPerScanLine;
 
 
     // get RSDP
@@ -36,7 +36,7 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
         }
     }
 
-    stiletto.bootprot_acpi.acpi_rsdp = rsdp;    // store RSDP
+    stiletto.stiletto_acpi.acpi_rsdp = rsdp;    // store RSDP
 
 
     // init EFI_SIMPLE_FILE_SYSTEM_PROTOCOL
@@ -132,9 +132,9 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
     }
 
     // store it
-    stiletto.bootprot_memory.pMem_map = efi_mem_map;
-    stiletto.bootprot_memory.map_sz   = efi_mem_map_sz;
-    stiletto.bootprot_memory.desc_sz  = efi_desc_sz;
+    stiletto.stiletto_memory.pMem_map = efi_mem_map;
+    stiletto.stiletto_memory.map_sz   = efi_mem_map_sz;
+    stiletto.stiletto_memory.desc_sz  = efi_desc_sz;
 
 
 

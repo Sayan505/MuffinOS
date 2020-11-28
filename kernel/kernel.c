@@ -7,10 +7,10 @@
 __attribute__((noreturn))
 void start_kernel(stiletto_t *stiletto) {
 
-    uint32_t *fb   = (uint32_t *)stiletto->bootprot_video.pFrame_buffer_base;   // 32bpp
-    uint32_t horiz = stiletto->bootprot_video.horiz;
-    uint32_t vert  = stiletto->bootprot_video.vert;
-    uint32_t ppsl  = stiletto->bootprot_video.ppsl;
+    uint32_t *fb   = (uint32_t *)stiletto->stiletto_video.pFrame_buffer_base;   // 32bpp
+    uint32_t horiz = stiletto->stiletto_video.horiz;
+    uint32_t vert  = stiletto->stiletto_video.vert;
+    uint32_t ppsl  = stiletto->stiletto_video.ppsl;
 
     uint32_t color = 0x34495E;  // use any RGB hex
 

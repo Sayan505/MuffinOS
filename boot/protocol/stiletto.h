@@ -6,7 +6,7 @@
 #include "stiletto_memory.h"
 
 typedef struct {
-    stiletto_video_t  bootprot_video;
-    stiletto_acpi_t   bootprot_acpi;
-    stiletto_memory_t bootprot_memory;
+    stiletto_video_t  stiletto_video;
+    stiletto_acpi_t   stiletto_acpi;
+    stiletto_memory_t stiletto_memory;
 } stiletto_t;
