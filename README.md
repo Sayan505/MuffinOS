@@ -10,7 +10,7 @@ An experimental x86_64 hobby OS project.
 &nbsp;  
 ### Progress:
 💚 Boot Protocol.  
-💚 UEFI Booting.  
+💚 UEFI Booting (ELF64 kernel).  
 💚 Serial Port.  
 💛 GDT.  
 💛 Re-configure Paging.  
