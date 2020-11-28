@@ -42,7 +42,7 @@ An experimental x86_64 hobby OS project.
 ### &nbsp; Get the source
 &nbsp; &nbsp; `git clone` to test the kernel with the pre-build bootloader or,  
 &nbsp; &nbsp; `git clone --recursive` during cloning to fetch this repo and EDK2 + all it's submodules or,   
-&nbsp; &nbsp; `git submodule update --init --recursive` after cloning to get EDK2 and it's submodules
+&nbsp; &nbsp; `git submodule update --init --recursive` after cloning to get EDK2 and it's submodules.
 ### &nbsp; Requirements
 * GCC (cross-compiler coming up soon)
 * GNU LD
@@ -56,7 +56,7 @@ An experimental x86_64 hobby OS project.
 &nbsp; Build full system in $(FSDIR) without generating disk images:  
 &nbsp; &nbsp; `make testall`  
 &nbsp; Build and test kernel only, in $(FSDIR) without generating disk images:  
-&nbsp; &nbsp; `make test` after `make bootloader`, once.
+&nbsp; &nbsp; `make test`, requires `make bootloader`, once.
 
 &nbsp;
 
