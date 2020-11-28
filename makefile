@@ -207,6 +207,7 @@ prepcidirs :
 # init submodules (EDK2):
 init_sub : init_submodules
 init_submodules :
+	rmdir $(EDKDIR)
 	git submodule update --init --recursive
 
 
