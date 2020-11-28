@@ -9,6 +9,7 @@ An experimental x86_64 hobby OS project.
 💚: Completed.  
 &nbsp;  
 ### Progress:
+💚 Boot Protocol.  
 💚 UEFI Booting.  
 💚 Serial Port.  
 💛 GDT.  
