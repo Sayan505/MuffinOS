@@ -13,7 +13,7 @@
 
 
 # toolchain:
-CC = gcc
+CC = clang
 LD = ld
 AS = nasm
 
@@ -47,46 +47,45 @@ ASM_SYSTEMSRC := $(shell find ./ -type d \( -path ./boot -o -path ./edk2 \) -pru
 OBJ := ${C_SYSTEMSRC:.c=.o} ${ASM_SYSTEMSRC:.asm=.o}
 
 # toolchain flags:
-CFLAGS = -m64							\
-		 -O0							\
-		 -std=c17						\
-		 -Wall							\
-		 -Wextra						\
-		 -Wpedantic						\
-		 -ffreestanding					\
-		 -nostdlib						\
-		 -nostartfiles					\
-		 -nodefaultlibs					\
-		 -fno-pic						\
-		 -fno-stack-protector			\
-		 -fno-omit-frame-pointer		\
-		 -mcmodel=kernel				\
-		 -mno-red-zone					\
-		 -mno-mmx						\
-		 -mno-sse						\
-		 -mno-sse2						\
-		 -mno-sse3						\
-		 -mno-ssse3						\
-		 -mno-sse4						\
-		 -mno-sse4.1					\
-		 -mno-sse4.2					\
+CFLAGS = -target x86_64-unknown-none-elf64 	\
+		 -O0								\
+		 -std=c17							\
+		 -Wall								\
+		 -Wextra							\
+		 -Wpedantic							\
+		 -ffreestanding						\
+		 -nostdlib							\
+		 -nodefaultlibs						\
+		 -fno-pic							\
+		 -fno-stack-protector				\
+		 -fno-omit-frame-pointer			\
+		 -mcmodel=kernel					\
+		 -mno-red-zone						\
+		 -mno-mmx							\
+		 -mno-sse							\
+		 -mno-sse2							\
+		 -mno-sse3							\
+		 -mno-ssse3							\
+		 -mno-sse4							\
+		 -mno-sse4.1						\
+		 -mno-sse4.2						\
 		 -mno-80387
 
-LDFLAGS = -T linker.ld					\
-		  -no-pie						\
-		  -nostdlib						\
+LDFLAGS = -T linker.ld						\
+		  -no-pie							\
+		  -nostdlib							\
 		  -z max-page-size=0x1000
 
-ASFLAGS = -O0							\
-		  -f							\
+ASFLAGS = -O0								\
+		  -f								\
 		  elf64
 
-QEMUFLAGS = -bios ovmf/OVMF.fd			\
-			-hda $(IMGDIR)/$(IMG)		\
+QEMUFLAGS = -bios ovmf/OVMF.fd				\
+			-hda $(IMGDIR)/$(IMG)			\
 			-m 8G
 
-QEMURUNFLAGS = -bios ovmf/OVMF.fd		\
-			   fat:rw:$(FSDIR)/  		\
+QEMURUNFLAGS = -bios ovmf/OVMF.fd			\
+			   fat:rw:$(FSDIR)/  			\
 			   -m 8G
 
 # /dev/loop???:

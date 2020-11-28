@@ -16,7 +16,6 @@ An experimental x86_64 hobby OS project.
 💛 Re-configure Paging.  
 💛 Higher-Half Kernel.  
 💛 Text Renderer on GOP.  
-💛 GCC Cross Compiler.   
 💛 Shell. (to be developed further as I progress)  
 💙 Load IDT.   
 💙 Keyboard Driver.  
@@ -46,7 +45,8 @@ An experimental x86_64 hobby OS project.
 &nbsp; &nbsp; `git clone --recursive` during cloning to fetch this repo and EDK2 + all its submodules or,   
 &nbsp; &nbsp; `make init_submodules`, which is `git submodule update --init --recursive` after cloning to get EDK2 and its submodules.
 ### &nbsp; Requirements
-* GCC (build-essential)
+* clang (for Kernel)
+* GCC (build-essential; for the MuffinBoot Bootloader)
 * GNU LD
 * nasm
 * GNU Parted
@@ -58,7 +58,7 @@ An experimental x86_64 hobby OS project.
 &nbsp; &nbsp; `make`  
 &nbsp; Build full system in $(FSDIR) without generating disk images:  
 &nbsp; &nbsp; `make testall`  
-&nbsp; Build to test kernel only, in $(FSDIR) without generating disk images:  
+&nbsp; Build to test the kernel only, in $(FSDIR) without generating disk images:  
 &nbsp; &nbsp; `make test`, requires `make bootloader`, once.
 
 &nbsp;
