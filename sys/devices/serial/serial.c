@@ -1,4 +1,4 @@
-#include "serial.h"
+#include <sys/devices/serial/serial.h>
 
 
 void init_serial(uint16_t port) {

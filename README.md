@@ -14,6 +14,7 @@ An experimental x86_64 hobby OS project.
 💚 Serial Port.  
 💛 GDT.  
 💛 Re-configure Paging.  
+💛 GOP Video.  
 💛 Text Renderer on GOP.  
 💛 stdout.  
 💙 Load IDT.  
@@ -73,7 +74,8 @@ And, so on...
 * iasl
 * nasm
 * python3-distutils
-* [EDK II](https://github.com/tianocore/edk2): `git submodule update --init --recursive`
+* [EDK II](https://github.com/tianocore/edk2): `git submodule update --init --recursive`  
+###### &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Dependencies of EDK II are subject to change.
 
 ### &nbsp; Process
 + Build with MuffinBootPkg. (Platform and inf included)

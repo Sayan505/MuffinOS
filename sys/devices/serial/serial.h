@@ -1,5 +1,8 @@
 #pragma once
 
+
+#include <stdint.h>
+
 #include <sys/devices/io_ports.h>
 
 // init serial
