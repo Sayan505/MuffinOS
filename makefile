@@ -160,7 +160,8 @@ compile_loader :
 	cd $(EDKDIR); bash build.sh
 
 fetch_loader :
-	\cp -f $(EDKDIR)/Build/MuffinBootPkg/RELEASE_GCC5/X64/$(BOOTX64.EFI) $(LOADRDIR)/$(BUILDDIR)
+	mkdir -p $(LOADRDIR)/$(BUILDDIR)
+	\cp -f $(EDKDIR)/Build/MuffinBootPkg/RELEASE_GCC5/X64/$(BOOTX64.EFI) $(LOADRDIR)/$(BUILDDIR)/
 
 
 

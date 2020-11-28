@@ -9,4 +9,5 @@ dkms.conf
 
 # build directory
 build/
+!boot/build/
 edk2
