@@ -1,14 +1,15 @@
 # REQUIRES ROOT ACCESS TO BUILD THE FINAL DISK IMAGE
 
-# make prepdirs 	: prepares build directory hierarchy.
-# make 				: makes full system with disk images.
-# make testall      : builds full system in $(FSDIR) without generating disk images.
-# make test 		: makes the KERNEL in $(FSDIR) without generating disk images.
-# make bootloader 	: makes the bootloader with EDK2.
-# make kernel	 	: build the full kernel.
-# make run 			: runs the full system from the disk image.
-# make testrun 		: runs the full system from $(FSDIR) in RW mode.
-# make ci			: for CI/CD.
+# make prepdirs 	   : prepares build directory hierarchy.
+# make init_submodules : init submodules (EDK2):
+# make 				   : makes full system with disk images.
+# make testall		   : builds full system in $(FSDIR) without generating disk images.
+# make test 		   : makes the KERNEL in $(FSDIR) without generating disk images.
+# make bootloader 	   : makes the bootloader with EDK2.
+# make kernel	 	   : build the full kernel.
+# make run 			   : runs the full system from the disk image.
+# make testrun 		   : runs the full system from $(FSDIR) in RW mode.
+# make ci			   : for CI/CD.
 
 
 # toolchain:
@@ -130,8 +131,8 @@ prepfs : prepdirs build_loader build_kernel loadfs
 
 # load system into the file-system dir:
 loadfs :
-	\cp -f $(LOADRDIR)/$(BUILDDIR)/$(BOOTX64.EFI) $(EFIDIR)
-	\cp -f $(BINDIR)/$(BIN) $(FSDIR)
+	\cp -f $(LOADRDIR)/$(BUILDDIR)/$(BOOTX64.EFI) $(EFIDIR)/
+	\cp -f $(BINDIR)/$(BIN) $(FSDIR)/
 
 # prepare build directory:
 prepdirs :
@@ -156,7 +157,7 @@ bootloader   : build_loader
 build_loader : compile_loader fetch_loader
 
 compile_loader :
-	\cp  -rf $(EDKCFGDIR)/* $(EDKDIR)
+	\cp  -rf $(EDKCFGDIR)/* $(EDKDIR)/
 	cd $(EDKDIR); bash build.sh
 
 fetch_loader :
@@ -201,6 +202,12 @@ ci : prepcidirs compile_loader link_kernel
 
 prepcidirs :
 	@mkdir -p $(BINDIR)
+
+
+# init submodules (EDK2):
+init_sub : init_submodules
+init_submodules :
+	git submodule update --init --recursive
 
 
 
