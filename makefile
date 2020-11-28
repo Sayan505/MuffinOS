@@ -73,7 +73,8 @@ CFLAGS = -target x86_64-unknown-none-elf64 	\
 		 -mno-sse4							\
 		 -mno-sse4.1						\
 		 -mno-sse4.2						\
-		 -mno-80387
+		 -mno-80387							\
+		 -I.
 
 LDFLAGS = -T linker.ld						\
 		  -no-pie							\

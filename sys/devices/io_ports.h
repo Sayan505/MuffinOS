@@ -1,8 +1,14 @@
+#pragma once
+
+
 #include <stdint.h>
 
+/*Ports:***********************/
 // COM
 #define COM1 (0x3F8)
 #define COM2 (0x2F8)
+
+/******************************/
 
 // Baud Rates
 #define BAUD_115200 (0x01)

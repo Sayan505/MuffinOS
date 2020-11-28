@@ -1,14 +1,8 @@
 /*
-    CONDITION: BAREBONES; STUB KERNEL.
+    The MuffinOS Kernel
 */
 
-#include "../boot/protocol/stiletto.h"
-#include "../devices/serial/serial.h"
-
-#include <stdint.h>
-
-#define PutPixel(__x__,__y__,__pxfmt__) fb[__y__*ppsl+__x__]=__pxfmt__
-
+#include <kernel/kernel.h>
 
 __attribute__((noreturn))
 void start_kernel(stiletto_t *stiletto) {

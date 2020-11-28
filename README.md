@@ -9,33 +9,28 @@ An experimental x86_64 hobby OS project.
 💚: Completed.  
 &nbsp;  
 ### Progress:
-💚 Boot Protocol.  
-💚 UEFI Booting (ELF64 kernel).  
+💚 Boot Protocol. (Stiletto)  
+💚 UEFI Booting (MuffinBoot; ELF64 kernel).  
 💚 Serial Port.  
 💛 GDT.  
 💛 Re-configure Paging.  
-💛 Higher-Half Kernel.  
 💛 Text Renderer on GOP.  
-💛 Shell. (to be developed further as I progress)  
-💙 Load IDT.   
-💙 Keyboard Driver.  
+💛 stdout.  
+💙 Load IDT.  
 💙 pcspkr.  
 💙 PMM.  
 💙 VMM.  
-💙 Parse ACPI tables. (MADT for APIC)  
+💙 Parse ACPI tables.  
 💙 ACPI Shutdown.  
 💙 APICs.  
 💙 LAPIC Timer.  
 💙 HPET Timer.  
-💙 A Basic Graphics Library. (GOP)  
+💙 A Graphics Library. (GOP)  
 💙 PCI Driver.  
 💙 SMP & SMT.  
 💙 Scheduler.  
-💙 Syscalls and API.  
-💙 Storage Driver. (AHCI, FAT32)  
-💙 ELF64 binary loading and exec as "Processes".  
-💙 IPC.  
-💙 libc.  
+💙 Storage Driver. (AHCI, FAT32)   
+And, so on...   
 
 &nbsp;
 
