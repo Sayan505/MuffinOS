@@ -1,0 +1,12 @@
+*.o
+*pyc
+
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+
+# build directory
+build/
+edk2

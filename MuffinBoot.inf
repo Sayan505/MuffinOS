@@ -1,0 +1,35 @@
+# Build with MuffinBootPkg
+
+[Defines]
+  INF_VERSION    = 1.25
+  BASE_NAME      = BootX64
+  FILE_GUID      = 7e088beb-814e-4ac2-a8ac-cb49fb368a99
+  MODULE_TYPE    = UEFI_APPLICATION
+  VERSION_STRING = 1.0
+  ENTRY_POINT    = UefiMain
+
+[Sources]
+  boot/bootloader.h
+  boot/bootloader.c
+  boot/elf_loader.c
+  boot/protocol/stiletto.h
+  boot/protocol/stiletto_video.h
+  boot/protocol/stiletto_acpi.h
+  boot/protocol/stiletto_memory.h
+
+[Packages]
+  MdePkg/MdePkg.dec
+
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  UefiLib
+
+[Guids]
+
+[Ppis]
+
+[Protocols]
+
+[FeaturePcd]
+
+[Pcd]

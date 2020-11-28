@@ -1,0 +1,5 @@
+[Defines]
+  DEC_SPECIFICATION = 0x00010005
+  PACKAGE_NAME      = MuffinBootPkg
+  PACKAGE_GUID      = c22d3535-0f04-46f9-bad0-385d55f57cab
+  PACKAGE_VERSION   = 1.0
