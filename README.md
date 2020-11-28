@@ -56,7 +56,7 @@ An experimental x86_64 hobby OS project.
 &nbsp; &nbsp; `make`  
 &nbsp; Build full system in $(FSDIR) without generating disk images:  
 &nbsp; &nbsp; `make testall`  
-&nbsp; Build and test kernel only, in $(FSDIR) without generating disk images:  
+&nbsp; Build to test kernel only, in $(FSDIR) without generating disk images:  
 &nbsp; &nbsp; `make test`, requires `make bootloader`, once.
 
 &nbsp;
