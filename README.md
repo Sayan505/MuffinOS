@@ -70,9 +70,9 @@ An experimental x86_64 hobby OS project.
 
 ## Build MuffinBoot UEFI bootloader
 ### &nbsp; Requirements
-* GCC
-* EDK II
+* Atleast GCC5
+* [EDK II](https://github.com/tianocore/edk2)
 
 ### &nbsp; Process
-+ Build with MdeModulePkg. (MuffinBoot.inf included)  
-+ Place the BootX64.efi file in boot/build  
++ Build with MuffinBootPkg. (Platform and inf included)
++ just do `make bootloader`.
