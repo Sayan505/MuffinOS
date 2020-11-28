@@ -71,7 +71,7 @@ An experimental x86_64 hobby OS project.
 ## Build MuffinBoot UEFI bootloader
 ### &nbsp; Requirements
 * Atleast GCC5
-* [EDK II](https://github.com/tianocore/edk2)
+* [EDK II](https://github.com/tianocore/edk2) `git submodule update --init --recursive`
 
 ### &nbsp; Process
 + Build with MuffinBootPkg. (Platform and inf included)
