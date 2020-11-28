@@ -24,6 +24,10 @@ IMG   = OS.img
 # disk image size in MiB:
 IMGMB = 64
 
+# QEMU config:
+RAM = 8G
+CPU = 4
+
 # dirs:
 EDKDIR    = edk2
 LOADRDIR  = boot
@@ -81,12 +85,23 @@ ASFLAGS = -O0								\
 		  elf64
 
 QEMUFLAGS = -bios ovmf/OVMF.fd				\
+			-machine q35					\
+			-cpu max,kvm=off				\
+			-d cpu_reset					\
+			-serial stdio					\
 			-hda $(IMGDIR)/$(IMG)			\
-			-m 8G
+			-m $(RAM)						\
+			-smp cpus=$(CPU),maxcpus=$(CPU),cores=$(CPU),threads=1,sockets=1
 
+# testing:
 QEMURUNFLAGS = -bios ovmf/OVMF.fd			\
+			   -machine q35					\
+			   -cpu max,kvm=off				\
+			   -d cpu_reset					\
+			   -serial stdio				\
 			   fat:rw:$(FSDIR)/  			\
-			   -m 8G
+			   -m $(RAM)					\
+			   -smp cpus=$(CPU),maxcpus=$(CPU),cores=$(CPU),threads=1,sockets=1
 
 # /dev/loop???:
 LOOPDSK := 0
