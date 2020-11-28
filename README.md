@@ -16,6 +16,7 @@ An experimental x86_64 hobby OS project.
 💛 Re-configure Paging.  
 💛 Higher-Half Kernel.  
 💛 Text Renderer on GOP.  
+💛 GCC Cross Compiler.   
 💛 Shell. (to be developed further as I progress)  
 💙 Load IDT.   
 💙 Keyboard Driver.  
@@ -45,8 +46,9 @@ An experimental x86_64 hobby OS project.
 &nbsp; &nbsp; `git clone --recursive` during cloning to fetch this repo and EDK2 + all its submodules or,   
 &nbsp; &nbsp; `make init_submodules`, which is `git submodule update --init --recursive` after cloning to get EDK2 and its submodules.
 ### &nbsp; Requirements
-* GCC (cross-compiler coming up soon)
+* GCC (build-essential)
 * GNU LD
+* nasm
 * GNU Parted
 * dosfstools
 * EDK II (optional; binary included; to build the MuffinBoot bootloader)
@@ -65,13 +67,17 @@ An experimental x86_64 hobby OS project.
 &nbsp; Run the full system from the disk image:  
 &nbsp; &nbsp; `make run`  
 &nbsp; Run the full system from $(FSDIR) in RW mode:  
-&nbsp; &nbsp; `make testrun` 
+&nbsp; &nbsp; `make testrun`  
 
 &nbsp;
 
 ## Build MuffinBoot UEFI bootloader
 ### &nbsp; Requirements
-* Atleast GCC5
+* Atleast GCC5 (build-essential)
+* uuid-dev
+* iasl
+* nasm
+* python3-distutils
 * [EDK II](https://github.com/tianocore/edk2): `git submodule update --init --recursive`
 
 ### &nbsp; Process
