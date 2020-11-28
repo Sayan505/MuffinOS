@@ -10,4 +10,4 @@ dkms.conf
 # build directory
 build/
 !boot/build/
-edk2
+edk2/
