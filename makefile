@@ -184,6 +184,7 @@ fetch_loader :
 # RUN:
 # run full system under QEMU from the disk image:
 run :
+	@clear
 	qemu-system-x86_64 $(QEMUFLAGS)
 
 
@@ -208,6 +209,7 @@ test_loader : prepdirs build_loader loadfs
 # run under QEMU from $(FSDIR):
 tr      : testrun
 testrun :
+	@clear
 	qemu-system-x86_64 $(QEMURUNFLAGS)
 
 
