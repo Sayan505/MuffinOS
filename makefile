@@ -208,7 +208,7 @@ prepcidirs :
 init_sub : init_submodules
 init_submodules :
 	rm -rf $(EDKDIR)
-	git submodule update --init --recursive
+	git submodule update --init --recursive --progress
 
 
 
