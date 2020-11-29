@@ -39,7 +39,7 @@ And, so on...
 ### &nbsp; Get the source
 &nbsp; &nbsp; `git clone` to test the kernel with the pre-build bootloader or,  
 &nbsp; &nbsp; `git clone --recursive` during cloning to fetch this repo and EDK2 + all its submodules or,   
-&nbsp; &nbsp; `make init_submodules`, which is `git submodule update --init --recursive` after cloning to get EDK2 and its submodules.
+&nbsp; &nbsp; `make init_submodules`, which is `git submodule update --init --recursive` after `git clone` to get EDK2 and its submodules.
 ### &nbsp; Requirements
 * clang (for Kernel)
 * GCC (build-essential; for the MuffinBoot Bootloader)
