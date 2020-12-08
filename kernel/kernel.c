@@ -22,7 +22,7 @@ void start_kernel(stiletto_t *stiletto) {
         }
     }
 
-    init_serial(COM1);
+    init_com1();
     
     com1_out('x');
 

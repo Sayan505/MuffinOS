@@ -47,7 +47,7 @@ And, so on...
 * nasm
 * GNU Parted
 * dosfstools
-* EDK II (optional; binary included; to build the MuffinBoot bootloader)
+* EDK II (optional; binary included, to build the MuffinBoot bootloader)
 
 ### &nbsp; Process
 &nbsp; Build full system with disk images (losetup requires root):  

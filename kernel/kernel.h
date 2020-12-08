@@ -11,3 +11,5 @@
 
 
 #define PutPixel(__x__,__y__,__pxfmt__) fb[__y__*ppsl+__x__]=__pxfmt__
+
+#define init_com1() init_serial(COM1)

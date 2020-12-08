@@ -1,15 +1,36 @@
 # REQUIRES ROOT ACCESS TO BUILD THE FINAL DISK IMAGE
 
-# make prepdirs 	   : prepares build directory hierarchy.
-# make init_submodules : init submodules (EDK2):
-# make 				   : makes full system with disk images.
-# make testall		   : builds full system in $(FSDIR) without generating disk images.
-# make test 		   : makes the KERNEL in $(FSDIR) without generating disk images.
-# make bootloader 	   : makes the bootloader with EDK2.
-# make kernel	 	   : build the full kernel.
-# make run 			   : runs the full system from the disk image.
-# make testrun 		   : runs the full system from $(FSDIR) in RW mode.
-# make ci			   : for CI/CD.
+# make init_submodules : fetch EDK2 and it's submodules.
+
+# make all		  : build full system with disk images.
+# make testall	  : build full system in $(FSDIR) without generating disk images.
+
+# make bootloader : build the MuffinBoot bootloader only.
+# make kernel	  : build the kernel only.
+
+# make test		  : build the kernel and copies the bootloader over into in $(FSDIR), if present.
+# make testboot   : build the bootloader and copies the kernel over into in $(FSDIR), if present.
+
+# make run		  : run full system from the disk image in $(IMGDIR).
+# make testrun	  : run full system from the $(FSDIR) with the disk in R/W mode.
+
+
+# STEPS FOR A FULL MANUAL BUILD:
+
+# make dirs
+# make bootloader
+# make kernel
+# make fs
+#	(at this stage, make any manual changes to the filesystem if any)
+# make img
+
+
+# KERNEL DEV WORKFLOW:
+
+# code...
+# make test
+# make testrun
+
 
 
 # toolchain:
@@ -18,37 +39,67 @@ LD = ld
 AS = nasm
 
 # outputs:
-BIN   = kernel
-IMG   = OS.img
+KNL = kernel
+BOOTX64.EFI = BootX64.efi
+
+IMG = OS.img
 
 # disk image size in MiB:
 IMGMB = 64
 
 # QEMU config:
 RAM = 8G
-CPU = 4
+CPUS = 4
 
 # dirs:
-EDKDIR    = edk2
-LOADRDIR  = boot
+  # extra sources: 
+EDKDIR     = edk2
+BOOTDIR    = boot
+PROGSRCDIR = programs
+
+  # EDK2 init & MuffinBootPkg:
 EDKCFGDIR = edk2config
+
+  # output:
+    # base build folder:
 BUILDDIR  = build
-BINDIR    = $(BUILDDIR)/exec
+
+    # base binary folder:
+BINDIR    = $(BUILDDIR)/bin
+
+    # kernel:
+KNLDIR    = $(BINDIR)/kernel
+
+    # programs:
+PROGDIR  = $(BINDIR)/programs
+
+    # root filesystem directory:
 FSDIR     = $(BUILDDIR)/fs
-IMGDIR    = $(BUILDDIR)/img
+
+    # bootloader in $(FSDIR):
 EFIDIR    = $(FSDIR)/EFI/BOOT
+
+	# kernel in $(FSDIR):
+SYSDIR    = $(FSDIR)/sys
+
+	# programs in $(FSDIR):
+PRGDIR    = $(FSDIR)/prog
+
+    # disk image output folder: 
+IMGDIR    = $(BUILDDIR)/img
+
+    # loop-disk mount point:
 MNTPNT    = $(BUILDDIR)/mnt
 
-# bootloader binary:
-BOOTX64.EFI = BootX64.efi
 
-# sources:
-C_SYSTEMSRC   := $(shell find ./ -type d \( -path ./boot -o -path ./edk2 \) -prune -false -o -name '*.c')
-ASM_SYSTEMSRC := $(shell find ./ -type d \( -path ./boot -o -path ./edk2 \) -prune -false -o -name '*.asm')
+# kernel sources:
+C_KERNELSRC   := $(shell find ./ -type d \( -path ./$(BOOTDIR) -o -path ./$(EDKDIR) -o -path ./$(PROGDIR) \) -prune -false -o -name '*.c')
+ASM_KERNELSRC := $(shell find ./ -type d \( -path ./$(BOOTDIR) -o -path ./$(EDKDIR) -o -path ./$(PROGDIR) \) -prune -false -o -name '*.asm')
 ##$(shell find ./ -type d \( -path ./boot -o -path ./progs \) -prune -false -o -name '*.c')
 
 # objs:
-OBJ := ${C_SYSTEMSRC:.c=.o} ${ASM_SYSTEMSRC:.asm=.o}
+OBJ := ${C_KERNELSRC:.c=.o} ${ASM_KERNELSRC:.asm=.o}
+
 
 # toolchain flags:
 CFLAGS = -target x86_64-unknown-none-elf64 	\
@@ -92,7 +143,7 @@ QEMUFLAGS = -bios ovmf/OVMF.fd				\
 			-serial stdio					\
 			-hda $(IMGDIR)/$(IMG)			\
 			-m $(RAM)						\
-			-smp cpus=$(CPU),maxcpus=$(CPU),cores=$(CPU),threads=1,sockets=1
+			-smp cpus=$(CPUS),maxcpus=$(CPUS),cores=$(CPUS),threads=1,sockets=1
 
 # testing:
 QEMURUNFLAGS = -bios ovmf/OVMF.fd			\
@@ -102,7 +153,7 @@ QEMURUNFLAGS = -bios ovmf/OVMF.fd			\
 			   -serial stdio				\
 			   fat:rw:$(FSDIR)/  			\
 			   -m $(RAM)					\
-			   -smp cpus=$(CPU),maxcpus=$(CPU),cores=$(CPU),threads=1,sockets=1
+			   -smp cpus=$(CPUS),maxcpus=$(CPUS),cores=$(CPUS),threads=1,sockets=1
 
 # /dev/loop???:
 LOOPDSK := 0
@@ -114,20 +165,119 @@ LOOPDSK := 0
 all : build_system
 	@echo "\nOutput: $(IMGDIR)/$(IMG)\nmake run"
 
+
 # build the whole system with disk images:
-build_system : loadimg
+build_system : dirs bootloader kernel progs fs img
 
-# load the file-system into the image:
-loadimg : fmtimg
-	sudo mount $(LOOPDSK)p1 -t msdos -o umask=0000 $(MNTPNT)
 
-	\cp -rf $(FSDIR)/* $(MNTPNT)
 
-	sudo umount $(MNTPNT)
-	sudo losetup -d $(LOOPDSK)
 
-# format the file-system (FAT32) in the disk image:
-fmtimg : genimg
+# generate the build folder hierarchy:
+dirs : build_dir knl_dir prog_dir fs_dir efi_dir_fs knl_dir_fs prog_dir_fs img_dir mnt_pnt
+
+build_dir :
+	@mkdir -p $(BUILDDIR)
+
+knl_dir :
+	@mkdir -p $(BUILDDIR)
+		@mkdir -p $(BINDIR)
+			@mkdir -p $(KNLDIR)
+
+prog_dir :
+	@mkdir -p $(BUILDDIR)
+		@mkdir -p $(BINDIR)
+			@mkdir -p $(PROGDIR)
+
+fs_dir :
+	@mkdir -p $(BUILDDIR)
+		@mkdir -p $(FSDIR)
+
+efi_dir_fs :
+	@mkdir -p $(BUILDDIR)
+		@mkdir -p $(FSDIR)
+			@mkdir -p $(EFIDIR)
+
+knl_dir_fs :
+	@mkdir -p $(BUILDDIR)
+		@mkdir -p $(FSDIR)
+			@mkdir -p $(SYSDIR)
+
+prog_dir_fs :
+	@mkdir -p $(BUILDDIR)
+		@mkdir -p $(FSDIR)
+			@mkdir -p $(PRGDIR)
+
+img_dir :
+	@mkdir -p $(BUILDDIR)
+		@mkdir -p $(IMGDIR)
+
+mnt_pnt :
+	@mkdir -p $(BUILDDIR)
+		@mkdir -p $(MNTPNT)
+
+
+
+# build MuffinBoot bootloader:
+bootloader : compile_loader fetch_loader
+
+compile_loader :
+	\cp  -rf $(EDKCFGDIR)/* $(EDKDIR)/
+	cd $(EDKDIR); bash build.sh
+
+fetch_loader :
+	mkdir -p $(BOOTDIR)/$(BUILDDIR)
+	\cp -f $(EDKDIR)/Build/MuffinBootPkg/RELEASE_GCC5/X64/$(BOOTX64.EFI) $(BOOTDIR)/$(BUILDDIR)/
+
+
+
+
+# build MuffinOS kernel:
+kernel : knl_dir compile_kernel
+
+# compile & link kernel:
+compile_kernel : $(OBJ)
+	$(LD) $(LDFLAGS) $^ -o $(KNLDIR)/$(KNL)
+
+%.o : %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+%.o : %.asm
+	$(CC) $(CFLAGS) -c $< -o $@
+
+
+
+
+# build Programs:
+progs : prog_dir
+	make -C $(PROGSRCDIR)/
+
+
+
+
+# load the system along with it's programs into the filesystem directory in $(FSDIR):
+fs : fs_dir load_bootloader load_kernel load_programs
+
+# load the bootloader into the filesystem:
+load_bootloader : efi_dir_fs
+	\cp -f $(BOOTDIR)/$(BUILDDIR)/$(BOOTX64.EFI) $(EFIDIR)/ 2> /dev/null || :
+
+# load the kernel into the filesystem:
+load_kernel : knl_dir knl_dir_fs
+	\cp -f $(KNLDIR)/$(KNL) $(SYSDIR) 2> /dev/null || :
+
+# load the programs into the filesystem:
+load_programs : prog_dir prog_dir_fs
+	@echo " "
+
+
+
+
+# generate disk image from $(FSDIR):
+img : gen_img fmt_img mount_img load_img umount_img
+
+gen_img : img_dir
+	dd if=/dev/zero of=$(IMGDIR)/$(IMG) bs=1M count=$(IMGMB) oflag=sync
+
+fmt_img : gen_img
 	@echo "sudo losetup -fP $(IMGDIR)/$(IMG)"
 	$(eval LOOPDSK=$(shell sudo losetup --show -fP $(IMGDIR)/$(IMG)))
 
@@ -137,92 +287,56 @@ fmtimg : genimg
 
 	sudo mkfs.fat -F 32 $(LOOPDSK)p1
 
-# generate a blank disk image:
-genimg : prepfs
-	dd if=/dev/zero of=$(IMGDIR)/$(IMG) bs=1M count=$(IMGMB) oflag=sync
+mount_img : mnt_pnt
+	sudo mount $(LOOPDSK)p1 -t msdos -o umask=0000 $(MNTPNT)
 
-# prepare the file-system dir:
-prepfs : prepdirs build_loader build_kernel loadfs
+load_img : mount_img
+	\cp -rf $(FSDIR)/* $(MNTPNT)
 
-# load system into the file-system dir:
-loadfs :
-	\cp -f $(LOADRDIR)/$(BUILDDIR)/$(BOOTX64.EFI) $(EFIDIR)/
-	\cp -f $(BINDIR)/$(BIN) $(FSDIR)/
-
-# prepare build directory:
-prepdirs :
-	@mkdir -p $(BINDIR) $(MNTPNT) $(FSDIR) $(EFIDIR) $(IMGDIR)
+umount_img :
+	sudo umount $(MNTPNT)
+	sudo losetup -d $(LOOPDSK)
 
 
-# build kernel:
-kernel       : build_kernel
-build_kernel : prepdirs link_kernel
-
-# link kernel:
-link_kernel : $(OBJ)
-	$(LD) $(LDFLAGS) $^ -o $(BINDIR)/$(BIN)
-
-# compile kernel:
-%.o : %.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-# build MuffinBoot bootloader:
-bootloader   : build_loader
-
-build_loader : compile_loader fetch_loader
-
-compile_loader :
-	\cp  -rf $(EDKCFGDIR)/* $(EDKDIR)/
-	cd $(EDKDIR); bash build.sh
-
-fetch_loader :
-	mkdir -p $(LOADRDIR)/$(BUILDDIR)
-	\cp -f $(EDKDIR)/Build/MuffinBootPkg/RELEASE_GCC5/X64/$(BOOTX64.EFI) $(LOADRDIR)/$(BUILDDIR)/
-
-
-
-
-# RUN:
-# run full system under QEMU from the disk image:
-run :
-	@clear
-	qemu-system-x86_64 $(QEMUFLAGS)
 
 
 # TESTING:
-# test full system without generating disk images:
-tstall   : testall
-testall  : test_all
-test_all : prepdirs build_loader kernel loadfs
-	@echo "\nOutput: $(FSDIR)/\nmake testrun"
 
-# test kernel without generating disk images:
-tst  :  test
-test : build_kernel loadfs
-	@echo "\nOutput: $(FSDIR)/\nmake testrun"
+# build both bootloader and kernel into $(FSDIR) without generating disk images:
+testall : dirs bootloader kernel progs fs
 
-# test bootloader without building kernel and generating disk images:
-tl 		 : test_loader
-test_ldr : test_loader
-test_loader : prepdirs build_loader loadfs
-	@echo "\nOutput: $(FSDIR)/\nmake testrun"
+# build bootloader only:
+testboot       : testloader
+testloader     : testbootloader
+testbootloader : bootloader fs
 
-# run under QEMU from $(FSDIR):
-tr      : testrun
+# build kernel only:
+test : testkernel
+testkernel : kernel fs
+
+
+# CI/CD:
+ci : knl_dir compile_loader compile_kernel
+
+
+# TEST-RUNNING:
+# run the system from $(FSDIR) with the disk in R/W mode:
 testrun :
 	@clear
 	qemu-system-x86_64 $(QEMURUNFLAGS)
 
 
-# CI:
-ci : prepcidirs compile_loader link_kernel
-
-prepcidirs :
-	@mkdir -p $(BINDIR)
 
 
-# init submodules (EDK2):
-init_sub : init_submodules
+# RUNNING:
+run :
+	@clear
+	qemu-system-x86_64 $(QEMUFLAGS)
+
+
+
+
+init_sub 	    : init_submodules
 init_submodules :
 	rm -rf $(EDKDIR)
 	git submodule update --init --recursive --progress
@@ -231,8 +345,13 @@ init_submodules :
 
 
 # clean:
+clear : clean
 clean :
 	rm -rf $(BUILDDIR)
 	rm -rf $(shell find ./ -type d \( -path ./edk2 \) -prune -false -o -name '*.o')
 	rm -rf edk2/Build/
 
+clean_ci :
+	rm -rf $(BUILDDIR)
+	rm -rf $(shell find ./ -type d \( -path ./edk2 \) -prune -false -o -name '*.o')
+	rm -rf $(EDKDIR)/Build/MuffinBootPkg/RELEASE_GCC5/X64/$(BOOTX64.EFI)
