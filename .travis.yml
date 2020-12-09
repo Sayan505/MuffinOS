@@ -1,0 +1,16 @@
+language: c
+os: linux
+dist: focal
+sudo: true
+compiler:
+  - gcc
+  - clang
+git:
+    submodules: false
+before_install:
+  - make init_submodules
+  - sudo apt update
+  - sudo apt install -y build-essential clang uuid-dev iasl python3-distutils nasm
+script:
+  - make ci
+  - make clean_ci
