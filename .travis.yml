@@ -2,9 +2,7 @@ language: c
 os: linux
 dist: focal
 sudo: true
-compiler:
-  - gcc
-  - clang
+compiler: gcc
 git:
     submodules: false
 before_install:
