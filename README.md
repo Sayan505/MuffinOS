@@ -1,5 +1,9 @@
 # MuffinOS
 An experimental x86_64 hobby OS project.
+&nbsp;  
+&nbsp;  
+
+![](https://travis-ci.com/Sayan505/MuffinOS.svg?branch=master)
 
 &nbsp;
 ## Road Map
