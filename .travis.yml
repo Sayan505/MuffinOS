@@ -1,7 +1,7 @@
 language: c
+sudo: true
 os: linux
 dist: focal
-sudo: true
 compiler: gcc
 git:
     submodules: false
