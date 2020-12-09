@@ -316,7 +316,9 @@ testkernel : kernel fs
 
 
 # CI/CD:
-ci : knl_dir compile_loader compile_kernel
+ci	   : compile_loader kernel
+ci_knl : kernel
+ci_ldr : compile_loader
 
 
 # TEST-RUNNING:
@@ -354,4 +356,11 @@ clean :
 clean_ci :
 	rm -rf $(BUILDDIR)
 	rm -rf $(shell find ./ -type d \( -path ./edk2 \) -prune -false -o -name '*.o')
+	rm -rf $(EDKDIR)/Build/MuffinBootPkg/RELEASE_GCC5/X64/$(BOOTX64.EFI)
+
+clean_ci_knl :
+	rm -rf $(BUILDDIR)
+	rm -rf $(shell find ./ -type d \( -path ./edk2 \) -prune -false -o -name '*.o')
+
+clean_ci_ldr :
 	rm -rf $(EDKDIR)/Build/MuffinBootPkg/RELEASE_GCC5/X64/$(BOOTX64.EFI)

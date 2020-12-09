@@ -5,10 +5,15 @@ sudo: true
 compiler: gcc
 git:
     submodules: false
+
 before_install:
-  - make init_submodules
   - sudo apt update
-  - sudo apt install -y build-essential clang uuid-dev iasl python3-distutils nasm
-script:
-  - make ci
-  - make clean_ci
+  - sudo apt install -y clang nasm
+
+#before_script:
+#  - sudo apt install -y build-essential uuid-dev iasl python3-distutils
+#  - make init_submodules
+
+script: make ci_knl
+
+after_script: make clean_ci_knl
