@@ -1,8 +1,7 @@
 #include "bootloader.h"
 
 
-EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *SystemTable) {    
-    
+EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *SystemTable) {
     EFI_STATUS efi_status;
 
     uint64_t   pImage_entry;    // stores the entry-point of the kernel image.
@@ -16,7 +15,7 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
     gBS->LocateProtocol(&efi_gop_guid, NULL, (VOID **)&efi_gfx);
 
     // store it
-    stiletto.stiletto_video.pFrame_buffer_base = (uint64_t *)efi_gfx->Mode->FrameBufferBase;
+    stiletto.stiletto_video.pFrame_buffer_base = (uint32_t *)efi_gfx->Mode->FrameBufferBase;
     stiletto.stiletto_video.frame_buffer_sz    = (uint64_t)  efi_gfx->Mode->FrameBufferSize;
     stiletto.stiletto_video.horiz              = (uint32_t)  efi_gfx->Mode->Info->HorizontalResolution;
     stiletto.stiletto_video.vert               = (uint32_t)  efi_gfx->Mode->Info->VerticalResolution;

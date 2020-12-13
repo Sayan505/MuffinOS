@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 
+
 /*Ports:***********************/
 // COM
 #define COM1 (0x3F8)

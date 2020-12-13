@@ -4,23 +4,12 @@
 
 #include <kernel/kernel.h>
 
+
 __attribute__((noreturn))
 void start_kernel(stiletto_t *stiletto) {
+    init_video(stiletto->stiletto_video);
 
-    uint32_t *fb   = (uint32_t *)stiletto->stiletto_video.pFrame_buffer_base;   // 32bpp
-    uint32_t horiz = stiletto->stiletto_video.horiz;
-    uint32_t vert  = stiletto->stiletto_video.vert;
-    uint32_t ppsl  = stiletto->stiletto_video.ppsl;
-
-    uint32_t color = 0x34495E;  // use any RGB hex
-
-
-    // draw vertically for the vsync
-    for(uint32_t y = 0; y < vert; ++y) {
-        for(uint32_t x = 0; x < horiz; ++x) {
-            PutPixel(x, y, color);
-        }
-    }
+    clr_scr();
 
     init_com1();
     

@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <elf.h>
 
+
 #include <Uefi.h>
 #include <Guid/Acpi.h>
 #include <Guid/FileInfo.h>
@@ -16,5 +17,6 @@
 
 #define KERNEL_ABS_PATH    L"\\sys\\kernel"
 #define IMAGE_LOAD_ADDR    (0x0000000002000000)
+
 
 uint64_t load_image(void *pImage);

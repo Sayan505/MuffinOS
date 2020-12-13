@@ -18,7 +18,7 @@ An experimental x86_64 hobby OS project.
 💚 Serial Port.  
 💛 GDT.  
 💛 Re-configure Paging.  
-💛 GOP Video.  
+💚 GOP Video.  
 💛 Text Renderer on GOP.  
 💛 stdout.  
 💙 Load IDT.  
