@@ -6,7 +6,7 @@ An experimental x86_64 hobby OS project.
 ![](https://travis-ci.com/Sayan505/MuffinOS.svg?branch=master)
 
 &nbsp;
-## Road Map
+## Features
 #####  LEGEND:  
 💙: On my list.   
 💛: In-progress.  
@@ -14,27 +14,12 @@ An experimental x86_64 hobby OS project.
 &nbsp;  
 ### Progress:
 💚 Boot Protocol. (Stiletto)  
-💚 UEFI Booting (MuffinBoot; ELF64 kernel).  
+💚 UEFI Booting with Identity Paging (MuffinBoot; ELF64 kernel).  
 💚 Serial Port.  
-💛 GDT.  
-💛 Re-configure Paging.  
 💚 GOP Video.  
-💛 Text Renderer on GOP.  
-💛 stdout.  
-💙 Load IDT.  
-💙 pcspkr.  
-💙 PMM.  
-💙 VMM.  
-💙 Parse ACPI tables.  
-💙 ACPI Shutdown.  
-💙 APICs.  
-💙 LAPIC Timer.  
-💙 HPET Timer.  
-💙 A Graphics Library. (GOP)  
-💙 PCI Driver.  
-💙 SMP & SMT.  
-💙 Scheduler.  
-💙 Storage Driver. (AHCI, FAT32)   
+💛 Text Renderer on GOP. (stdout)    
+💛 PIT Timer.  
+💛 pcspkr.   
 And, so on...   
 
 &nbsp;

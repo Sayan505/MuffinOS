@@ -15,4 +15,5 @@
 
 
 // video
-#include <sys/video/video.h>
+#include <kernel/extern/video_vars.h>
+#include <sys/video/video_subroutines.h>
