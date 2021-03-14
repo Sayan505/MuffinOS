@@ -4,10 +4,10 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/lib/**"
+                "${workspaceFolder}/kernel/**"
             ],
-            "cStandard": "c11",
-            "intelliSenseMode": "clang-x64"
+            "cStandard": "c17",
+            "intelliSenseMode": "linux-gcc-x64"
         }
     ],
     "version": 4

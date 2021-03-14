@@ -14,7 +14,7 @@ static inline void clr_scr() {
     // draw vertically for the vsync
     for(uint32_t __y__ = 0; __y__ < video.vert; ++__y__) {
         for(uint32_t __x__ = 0; __x__ < video.horiz; ++__x__) {
-            putpixel_internal(__x__, __y__, 0x000000);
+            putpixel_internal(__x__, __y__, 0x00000000);
         }
     }
 }
