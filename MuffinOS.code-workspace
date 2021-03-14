@@ -5,9 +5,6 @@
 		}
 	],
 	"settings": {
-		"C_Cpp.default.includePath": "lib",
-		"files.associations": {
-			"video.h": "c"
-		}
+		"C_Cpp.default.includePath": ".",
 	}
 }

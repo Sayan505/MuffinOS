@@ -1,14 +1,13 @@
-# TODO: TRIM MAKEFILE (sources)
-
 # REQUIRES ROOT ACCESS TO BUILD THE FINAL DISK IMAGE
 
 # make init_submodules : fetch EDK2 and it's submodules.
 
-# make all		  : build full system with disk images.
-# make testall	  : build full system in $(FSDIR) without generating disk images.
+# make all		  : build full system + programs with disk images.
+# make testall	  : build full system + programs in $(FSDIR) without generating disk images.
 
 # make bootloader : build the MuffinBoot bootloader only.
 # make kernel	  : build the kernel only.
+# make progs	  : make -C the programs only.
 
 # make test		  : build the kernel and copies the bootloader over into in $(FSDIR), if present.
 # make testboot   : build the bootloader and copies the kernel over into in $(FSDIR), if present.
@@ -22,10 +21,11 @@
 # make dirs
 # make bootloader
 # make kernel
+# make progs
 # make fs
 #	(at this stage, make any manual changes to the filesystem if any)
 # make img
-
+# done.
 
 # KERNEL DEV WORKFLOW:
 
@@ -53,10 +53,10 @@ IMGMB = 64
 RAM = 8G
 CPUS = 4
 
-# dirs:
+# output dirs:
   # extra sources: 
 EDKDIR     = edk2
-BOOTDIR    = boot
+BOOTSRCDIR = boot
 PROGSRCDIR = programs
 
   # EDK2 init & MuffinBootPkg:
@@ -73,7 +73,7 @@ BINDIR    = $(BUILDDIR)/bin
 KNLDIR    = $(BINDIR)/kernel
 
     # bootloader:
-LDRBINDIR = $(BOOTDIR)/$(BUILDDIR)
+LDRBINDIR = $(BOOTSRCDIR)/$(BUILDDIR)
 
     # programs:
 PROGDIR  = $(BINDIR)/programs
@@ -98,8 +98,8 @@ MNTPNT    = $(BUILDDIR)/mnt
 
 
 # kernel sources:
-C_KERNELSRC   := $(shell find ./ -type d \( -path ./$(BOOTDIR) -o -path ./$(EDKDIR) -o -path ./$(PROGDIR) \) -prune -false -o -name '*.c')
-ASM_KERNELSRC := $(shell find ./ -type d \( -path ./$(BOOTDIR) -o -path ./$(EDKDIR) -o -path ./$(PROGDIR) \) -prune -false -o -name '*.asm')
+C_KERNELSRC   := $(shell find ./kernel/ -type f -name '*.c')
+ASM_KERNELSRC := $(shell find ./kernel/ -type f -name '*.asm')
 ##$(shell find ./ -type d \( -path ./boot -o -path ./progs \) -prune -false -o -name '*.c')
 
 # objs:
@@ -130,7 +130,8 @@ CFLAGS = -target x86_64-unknown-none-elf64 	\
 		 -mno-sse4.1						\
 		 -mno-sse4.2						\
 		 -mno-80387							\
-		 -I.
+		 -I.								\
+		 -Ikernel
 
 LDFLAGS = -T linker.ld						\
 		  -no-pie							\
@@ -230,7 +231,7 @@ compile_loader :
 	cd $(EDKDIR); bash build.sh
 
 fetch_loader :
-	mkdir -p $(BOOTDIR)/$(BUILDDIR)
+	mkdir -p $(BOOTSRCDIR)/$(BUILDDIR)
 	\cp -f $(EDKDIR)/Build/MuffinBootPkg/RELEASE_GCC5/X64/$(BOOTX64.EFI) $(LDRBINDIR)/
 
 
@@ -263,7 +264,7 @@ fs : fs_dir load_bootloader load_kernel load_programs
 
 # load the bootloader into the filesystem:
 load_bootloader : efi_dir_fs
-	\cp -f $(BOOTDIR)/$(BUILDDIR)/$(BOOTX64.EFI) $(EFIDIR)/ 2> /dev/null || :
+	\cp -f $(BOOTSRCDIR)/$(BUILDDIR)/$(BOOTX64.EFI) $(EFIDIR)/ 2> /dev/null || :
 
 # load the kernel into the filesystem:
 load_kernel : knl_dir knl_dir_fs
@@ -330,7 +331,7 @@ ci_ldr : compile_loader
 # run the system from $(FSDIR) with the disk in R/W mode:
 testrun :
 	@clear
-	qemu-system-x86_64 $(QEMURUNFLAGS)
+	qemu-system-x86_64.exe $(QEMURUNFLAGS)
 
 
 
@@ -338,7 +339,7 @@ testrun :
 # RUNNING:
 run :
 	@clear
-	qemu-system-x86_64 $(QEMUFLAGS)
+	qemu-system-x86_64.exe $(QEMUFLAGS)
 
 
 
