@@ -70,6 +70,9 @@ BINDIR    = $(BUILDDIR)/bin
     # kernel:
 KNLDIR    = $(BINDIR)/kernel
 
+    # bootloader:
+LDRBINDIR = $(BOOTDIR)/$(BUILDDIR)
+
     # programs:
 PROGDIR  = $(BINDIR)/programs
 
@@ -226,7 +229,7 @@ compile_loader :
 
 fetch_loader :
 	mkdir -p $(BOOTDIR)/$(BUILDDIR)
-	\cp -f $(EDKDIR)/Build/MuffinBootPkg/RELEASE_GCC5/X64/$(BOOTX64.EFI) $(BOOTDIR)/$(BUILDDIR)/
+	\cp -f $(EDKDIR)/Build/MuffinBootPkg/RELEASE_GCC5/X64/$(BOOTX64.EFI) $(LDRBINDIR)/
 
 
 
