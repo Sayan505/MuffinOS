@@ -1,3 +1,5 @@
+# TODO: TRIM MAKEFILE (sources)
+
 # REQUIRES ROOT ACCESS TO BUILD THE FINAL DISK IMAGE
 
 # make init_submodules : fetch EDK2 and it's submodules.
