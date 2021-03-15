@@ -6,8 +6,7 @@
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/kernel/**"
             ],
-            "cStandard": "c17",
-            "intelliSenseMode": "linux-gcc-x64"
+            "cStandard": "c17"
         }
     ],
     "version": 4

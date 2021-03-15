@@ -2,12 +2,11 @@
 
 # make init_submodules : fetch EDK2 and it's submodules.
 
-# make all		  : build full system + programs with disk images.
-# make testall	  : build full system + programs in $(FSDIR) without generating disk images.
+# make all		  : build full system with disk images.
+# make testall	  : build full system in $(FSDIR) without generating disk images.
 
 # make bootloader : build the MuffinBoot bootloader only.
 # make kernel	  : build the kernel only.
-# make progs	  : make -C the programs only.
 
 # make test		  : build the kernel and copies the bootloader over into in $(FSDIR), if present.
 # make testboot   : build the bootloader and copies the kernel over into in $(FSDIR), if present.
@@ -21,7 +20,6 @@
 # make dirs
 # make bootloader
 # make kernel
-# make progs
 # make fs
 #	(at this stage, make any manual changes to the filesystem if any)
 # make img
@@ -57,7 +55,6 @@ CPUS = 4
   # extra sources: 
 EDKDIR     = edk2
 BOOTSRCDIR = boot
-PROGSRCDIR = programs
 
   # EDK2 init & MuffinBootPkg:
 EDKCFGDIR = edk2config
@@ -75,9 +72,6 @@ KNLDIR    = $(BINDIR)/kernel
     # bootloader:
 LDRBINDIR = $(BOOTSRCDIR)/$(BUILDDIR)
 
-    # programs:
-PROGDIR  = $(BINDIR)/programs
-
     # root filesystem directory:
 FSDIR     = $(BUILDDIR)/fs
 
@@ -86,9 +80,6 @@ EFIDIR    = $(FSDIR)/EFI/BOOT
 
 	# kernel in $(FSDIR):
 SYSDIR    = $(FSDIR)/sys
-
-	# programs in $(FSDIR):
-PRGDIR    = $(FSDIR)/prog
 
     # disk image output folder: 
 IMGDIR    = $(BUILDDIR)/img
@@ -173,13 +164,13 @@ all : build_system
 
 
 # build the whole system with disk images:
-build_system : dirs bootloader kernel progs fs img
+build_system : dirs bootloader kernel fs img
 
 
 
 
 # generate the build folder hierarchy:
-dirs : build_dir knl_dir prog_dir fs_dir efi_dir_fs knl_dir_fs prog_dir_fs img_dir mnt_pnt
+dirs : build_dir knl_dir fs_dir efi_dir_fs knl_dir_fs img_dir mnt_pnt
 
 build_dir :
 	@mkdir -p $(BUILDDIR)
@@ -188,11 +179,6 @@ knl_dir :
 	@mkdir -p $(BUILDDIR)
 		@mkdir -p $(BINDIR)
 			@mkdir -p $(KNLDIR)
-
-prog_dir :
-	@mkdir -p $(BUILDDIR)
-		@mkdir -p $(BINDIR)
-			@mkdir -p $(PROGDIR)
 
 fs_dir :
 	@mkdir -p $(BUILDDIR)
@@ -207,11 +193,6 @@ knl_dir_fs :
 	@mkdir -p $(BUILDDIR)
 		@mkdir -p $(FSDIR)
 			@mkdir -p $(SYSDIR)
-
-prog_dir_fs :
-	@mkdir -p $(BUILDDIR)
-		@mkdir -p $(FSDIR)
-			@mkdir -p $(PRGDIR)
 
 img_dir :
 	@mkdir -p $(BUILDDIR)
@@ -252,15 +233,8 @@ compile_kernel : $(OBJ)
 
 
 
-# build Programs:
-progs : prog_dir
-	make -C $(PROGSRCDIR)/
-
-
-
-
-# load the system along with it's programs into the filesystem directory in $(FSDIR):
-fs : fs_dir load_bootloader load_kernel load_programs
+# load the system into the filesystem directory in $(FSDIR):
+fs : fs_dir load_bootloader load_kernel
 
 # load the bootloader into the filesystem:
 load_bootloader : efi_dir_fs
@@ -269,10 +243,6 @@ load_bootloader : efi_dir_fs
 # load the kernel into the filesystem:
 load_kernel : knl_dir knl_dir_fs
 	\cp -f $(KNLDIR)/$(KNL) $(SYSDIR) 2> /dev/null || :
-
-# load the programs into the filesystem:
-load_programs : prog_dir prog_dir_fs
-	@echo " "
 
 
 
@@ -309,7 +279,7 @@ umount_img :
 # TESTING:
 
 # build both bootloader and kernel into $(FSDIR) without generating disk images:
-testall : dirs bootloader kernel progs fs
+testall : dirs bootloader kernel fs
 
 # build bootloader only:
 testboot       : testloader
