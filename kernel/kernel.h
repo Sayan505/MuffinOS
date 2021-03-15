@@ -14,3 +14,7 @@
 
 // video
 #include <sys/video/video.h>
+
+
+// stdout
+#include <sys/video/stdout/stdout.h>
