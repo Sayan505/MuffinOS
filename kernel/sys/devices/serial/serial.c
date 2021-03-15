@@ -1,6 +1,12 @@
 #include <sys/devices/serial/serial.h>
 
 
+void set_baud(uint16_t port, uint8_t baud_rate) {
+    outb(port + 0, baud_rate);
+    outb(port + 1, 0x00);
+}
+
+
 void init_serial(uint16_t port) {
     outb(port + 1, 0x00);
     outb(port + 3, 0x80);

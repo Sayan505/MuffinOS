@@ -11,9 +11,6 @@
 // serial port
 #include <sys/devices/serial/serial.h>
 
-#define init_com1() init_serial(COM1)
-
 
 // video
-#include <kernel/extern/video_vars.h>
-#include <sys/video/video_subroutines.h>
+//#include <sys/video/video.h>

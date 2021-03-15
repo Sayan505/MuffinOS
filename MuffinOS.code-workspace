@@ -9,7 +9,8 @@
 		"files.associations": {
 			"kernel.h": "c",
 			"video_subroutines.h": "c",
-			"font.h": "c"
+			"font.h": "c",
+			"serial.h": "c"
 		},
 	}
 }

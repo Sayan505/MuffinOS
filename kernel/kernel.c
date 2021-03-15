@@ -65,9 +65,9 @@ void putchr(unsigned char _char) {
 
 __attribute__((noreturn))
 void start_kernel(stiletto_t *stiletto) {
-    init_video(stiletto->stiletto_video);
+    //init_video(stiletto->stiletto_video);
 
-    clr_scr();
+    //clr_scr();
 
     init_com1();
     

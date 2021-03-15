@@ -100,7 +100,7 @@ OBJ := ${C_KERNELSRC:.c=.o} ${ASM_KERNELSRC:.asm=.o}
 
 # toolchain flags:
 CFLAGS = -target x86_64-unknown-none-elf64 	\
-		 -O0								\
+		 -O2								\
 		 -std=c17							\
 		 -Wall								\
 		 -Wextra							\
