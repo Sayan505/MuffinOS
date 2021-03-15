@@ -170,10 +170,14 @@ build_system : dirs bootloader kernel fs img
 
 
 # generate the build folder hierarchy:
-dirs : build_dir knl_dir fs_dir efi_dir_fs knl_dir_fs img_dir mnt_pnt
+dirs : build_dir bin_dir knl_dir fs_dir efi_dir_fs knl_dir_fs img_dir mnt_pnt
 
 build_dir :
 	@mkdir -p $(BUILDDIR)
+
+bin_dir :
+	@mkdir -p $(BUILDDIR)
+		@mkdir -p $(BINDIR)
 
 knl_dir :
 	@mkdir -p $(BUILDDIR)
@@ -212,14 +216,14 @@ compile_loader :
 	cd $(EDKDIR); bash build.sh
 
 fetch_loader :
-	mkdir -p $(BOOTSRCDIR)/$(BUILDDIR)
+	mkdir -p $(LDRBINDIR)
 	\cp -f $(EDKDIR)/Build/MuffinBootPkg/RELEASE_GCC5/X64/$(BOOTX64.EFI) $(LDRBINDIR)/
 
 
 
 
 # build MuffinOS kernel:
-kernel : knl_dir compile_kernel
+kernel : build_dir bin_dir knl_dir compile_kernel
 
 # compile & link kernel:
 compile_kernel : $(OBJ)
@@ -292,7 +296,7 @@ testkernel : kernel fs
 
 
 # CI/CD:
-ci	   : compile_loader kernel
+ci	   : ci_ldr ci_knl
 ci_knl : kernel
 ci_ldr : compile_loader
 
