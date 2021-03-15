@@ -34,9 +34,10 @@
 
 
 # toolchain:
-CC = clang
-LD = ld
-AS = nasm
+CC   = clang
+LD   = ld
+AS   = nasm
+QEMU = qemu-system-x86_64.exe
 
 # outputs:
 KNL = kernel
@@ -305,7 +306,7 @@ ci_ldr : compile_loader
 # run the system from $(FSDIR) with the disk in R/W mode:
 testrun :
 	@clear
-	qemu-system-x86_64.exe $(QEMURUNFLAGS)
+	$(QEMU) $(QEMURUNFLAGS)
 
 
 
@@ -313,7 +314,7 @@ testrun :
 # RUNNING:
 run :
 	@clear
-	qemu-system-x86_64.exe $(QEMUFLAGS)
+	$(QEMU) $(QEMUFLAGS)
 
 
 
