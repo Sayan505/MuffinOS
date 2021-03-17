@@ -10,8 +10,8 @@ void putstr(const char* _str) {
 }
 
 void putchr(unsigned char _char) {
-    static int posi_x = 8;
-    static int posi_y = 12;
+    static int posi_x = char_width;
+    static int posi_y = char_height;
 
     // CR
     if (_char == '\r') {
