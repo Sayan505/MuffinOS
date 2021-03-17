@@ -1,4 +1,4 @@
-#include <sys/video/video.h>
+#include <sys/video/internal.h>
 
 
 void init_video(stiletto_video_t stiletto_video) {
