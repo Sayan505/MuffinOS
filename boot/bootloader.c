@@ -81,7 +81,7 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
 
     gBS->FreePool(efi_file_info);               // free mem for EFI_FILE_INFO
 
-    Print(L"\tImage Size: %llu\n", image_size);
+    Print(L"\tImage Size: %llu Bytes\n", image_size);
 
 
     // alloc kernel
