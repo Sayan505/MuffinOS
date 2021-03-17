@@ -19,8 +19,8 @@ An experimental x86_64 hobby OS project.
 💙 GDT.  
 💙 Re-configure Paging.  
 💚 GOP Video.  
-💛 Text Renderer on GOP.  
-💛 stdout.  
+💚 Text Renderer on GOP.  
+💚 stdout.  
 💙 Load IDT.  
 💛 pcspkr.  
 💙 PMM.  
@@ -31,6 +31,8 @@ An experimental x86_64 hobby OS project.
 💙 LAPIC Timer.  
 💙 HPET Timer.  
 💙 A Graphics Library. (GOP)  
+💙 USB Driver.  
+💙 stdin.  
 💙 PCI Driver.  
 💙 SMP & SMT.  
 💙 Scheduler.  
