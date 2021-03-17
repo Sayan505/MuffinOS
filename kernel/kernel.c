@@ -69,9 +69,8 @@ void start_kernel(stiletto_t *stiletto) {
 
     clr_scr();
 
-    putstr("Meow!\n\r");
-    putstr("Hello, \nthere!\n\r");
-    putchr('X');
+    putstr("MEOWWWW!\n\r");
+    putchr('>');
 
     init_com1();
     

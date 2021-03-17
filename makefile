@@ -34,7 +34,7 @@
 
 
 # toolchain:
-CC   = clang
+CC   = clang-11
 LD   = ld
 AS   = nasm
 QEMU = qemu-system-x86_64.exe
