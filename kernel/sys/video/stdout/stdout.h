@@ -10,5 +10,5 @@ extern uint32_t         color;
 
 #define FONT font
 
-void putchr(unsigned char);
-void putstr(const char*);
+void k_putchr(unsigned char);
+void k_putstr(const char*);

@@ -1,15 +1,15 @@
 #include <sys/video/stdout/stdout.h>
 
 
-void putstr(const char* _str) {
+void k_putstr(const char* _str) {
     while (*_str != '\0') {
-        putchr(*_str);
+        k_putchr(*_str);
 
         ++_str;
     }
 }
 
-void putchr(unsigned char _char) {
+void k_putchr(unsigned char _char) {
     static int posi_x = char_width;
     static int posi_y = char_height;
 
