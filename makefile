@@ -233,7 +233,7 @@ compile_kernel : $(OBJ)
 %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 %.o : %.asm
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(ASFLAGS) -c $< -o $@
 
 
 
