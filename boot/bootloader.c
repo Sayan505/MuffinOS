@@ -12,7 +12,24 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
     EFI_GUID efi_gop_guid = EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID;
     EFI_GRAPHICS_OUTPUT_PROTOCOL *efi_gfx;
 
-    gBS->LocateProtocol(&efi_gop_guid, NULL, (VOID **)&efi_gfx);
+    gBS->LocateProtocol(&efi_gop_guid, NULL, (VOID **)&efi_gfx);    // fetch
+
+    // fetch available video modes
+    EFI_GRAPHICS_OUTPUT_MODE_INFORMATION *efi_gfx_mode_info;
+    UINTN szEFI_gfx_mode_info;
+    UINT32 MaxMode = efi_gfx->Mode->MaxMode;
+
+    for(int i = 0; i < MaxMode; ++i) {
+        efi_gfx->QueryMode(efi_gfx, i, &szEFI_gfx_mode_info, &efi_gfx_mode_info);    // query
+        if(efi_gfx_mode_info->HorizontalResolution == 1920 && efi_gfx_mode_info->VerticalResolution == 1080) {
+            //found the prefered mode
+            efi_gfx->SetMode(efi_gfx, i);   // set it
+            break;
+        }
+    }
+    
+    // else, use the initial mode
+    Print(L"%d: %dx%d\t", efi_gfx->Mode->Mode, efi_gfx_mode_info->HorizontalResolution, efi_gfx_mode_info->VerticalResolution);   // display
 
     // store it
     stiletto.stiletto_video.pFrame_buffer_base = (uint32_t *)efi_gfx->Mode->FrameBufferBase;

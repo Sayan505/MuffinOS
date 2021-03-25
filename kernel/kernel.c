@@ -22,3 +22,5 @@ void start_kernel(stiletto_t *stiletto) {
 
     __endkernel__: goto __endkernel__;    // end of kernel
 }
+
+//sudo dd if=OS.img of=/dev/sdc bs=1M count=64 oflag=sync

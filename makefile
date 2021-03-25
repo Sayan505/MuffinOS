@@ -139,6 +139,7 @@ QEMUFLAGS = -bios ovmf/OVMF.fd				\
 			-cpu max,kvm=off				\
 			-d cpu_reset					\
 			-serial stdio					\
+			-device VGA,vgamem_mb=64		\
 			-hda $(IMGDIR)/$(IMG)			\
 			-m $(RAM)						\
 			-smp cpus=$(CPUS),maxcpus=$(CPUS),cores=$(CPUS),threads=1,sockets=1
@@ -149,6 +150,7 @@ QEMURUNFLAGS = -bios ovmf/OVMF.fd			\
 			   -cpu max,kvm=off				\
 			   -d cpu_reset					\
 			   -serial stdio				\
+			   -device VGA,vgamem_mb=64		\
 			   fat:rw:$(FSDIR)/  			\
 			   -m $(RAM)					\
 			   -smp cpus=$(CPUS),maxcpus=$(CPUS),cores=$(CPUS),threads=1,sockets=1
