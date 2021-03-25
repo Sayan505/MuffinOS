@@ -14,6 +14,7 @@
 
 // video
 #include <sys/video/video.h>
+extern void init_video(stiletto_video_t stiletto_video);
 
 
 // stdout

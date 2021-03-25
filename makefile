@@ -34,10 +34,10 @@
 
 
 # toolchain:
-CC   = clang-11
+CC   = clang
 LD   = ld
 AS   = nasm
-QEMU = qemu-system-x86_64.exe
+QEMU = qemu-system-x86_64
 
 # outputs:
 KNL = kernel
@@ -328,7 +328,6 @@ init_submodules :
 
 
 # clean:
-clear : clean
 clean :
 	rm -rf $(BUILDDIR)
 	rm -rf $(shell find ./ -type d \( -path ./edk2 \) -prune -false -o -name '*.o')

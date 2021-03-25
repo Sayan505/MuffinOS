@@ -8,6 +8,7 @@ git:
 before_install:
   - sudo apt update
   - sudo apt install -y clang-11 nasm
+  - alias clang="clang"
 
 #before_script:
 #  - sudo apt install -y build-essential uuid-dev iasl python3-distutils

@@ -6,7 +6,6 @@
 
 #include <sys/bootprotocol/stiletto_video.h>
 
-void init_video(stiletto_video_t stiletto_video);
 
 static inline void putpixel_internal(uint32_t x, uint32_t y, uint32_t color) {
     video.pFrame_buffer_base[y * video.ppsl + x] = color;
@@ -33,3 +32,5 @@ static inline void fill_scr(uint32_t hex_rgb_color) {
 
 #define putpixel(__x__, __y__)                  putpixel_internal(__x__, __y__, color)
 #define putpixel_rgb(__x__, __y__, __color__)   putpixel_internal(__x__, __y__, __color__)
+
+#define set_color(__color__) color = __color__
