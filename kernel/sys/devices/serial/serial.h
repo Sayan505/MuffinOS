@@ -1,25 +1,24 @@
 #pragma once
 
 
-#include <stdint.h>
-
+#include <sys/stdtypes.h>
 
 #include <sys/devices/io_ports.h>
 
 
 // init serial
-void init_serial(uint16_t port);
+VOID init_serial(UI16 port);
 
 // serial in
-int  is_serial_bus_clear(uint16_t port);
-void serial_char_out(uint16_t port, char datb);
+UI32  is_serial_bus_clear(UI16 port);
+VOID   serial_char_out(UI16 port, BYTE datb);
 
 // serial out
-int is_serial_recv(uint16_t port);
-char serial_char_in(uint16_t port);
+UI32 is_serial_recv(UI16 port);
+BYTE  serial_char_in(UI16 port);
 
 // set baud rate
-void set_baud(uint16_t port, uint8_t baud_rate);
+VOID set_baud(UI16 port, BYTE baud_rate);
 
 
 #define init_com1()        init_serial(COM1)

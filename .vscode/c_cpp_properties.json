@@ -1,12 +1,18 @@
 {
     "configurations": [
         {
-            "name": "Linux",
+            "name": "None",
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/kernel/**"
             ],
-            "cStandard": "c17"
+            "cStandard": "c17",
+            "intelliSenseMode": "linux-clang-x64",
+            "compilerArgs": [
+                "-nostdinc",
+                "-m64",
+                "-ffreestanding"
+            ]
         }
     ],
     "version": 4

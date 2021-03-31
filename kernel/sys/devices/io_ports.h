@@ -1,8 +1,7 @@
 #pragma once
 
 
-#include <stdint.h>
-
+#include <sys/stdtypes.h>
 
 /*Ports:***********************/
 // COM
@@ -17,5 +16,5 @@
 #define BAUD_38400  (0x03)
 
 
-void    outb(uint16_t port, uint8_t datb);
-uint8_t inb(uint16_t port);
+VOID outb(UI16 port, BYTE datb);
+BYTE inb(UI16 port);

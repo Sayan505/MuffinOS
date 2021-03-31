@@ -1,9 +1,9 @@
 #include <sys/video/stdout/stdout.h>
 
 
-void k_putchr(const unsigned char _char) {
-    static int posi_x = char_width;
-    static int posi_y = char_height;
+VOID k_putchr(const CHAR _char) {
+    static I32 posi_x = char_width;
+    static I32 posi_y = char_height;
 
     // CR
     if (_char == '\r') {
@@ -18,9 +18,9 @@ void k_putchr(const unsigned char _char) {
         return;
     }
 
-    int cx, cy;
-    int mask[8] = { 1, 2, 4, 8, 16, 32, 64, 128 };
-    unsigned char* glyph = FONT + _char * 16ULL;
+    I32 cx, cy;
+    I32 mask[8] = { 1, 2, 4, 8, 16, 32, 64, 128 };
+    BYTE* glyph = FONT + _char * 16ULL;
 
     for (cy = 0; cy < 16; ++cy) {
         for (cx = 0; cx < 8; ++cx) {
@@ -32,7 +32,7 @@ void k_putchr(const unsigned char _char) {
     posi_x += 8;
 }
 
-void k_putstr(const char* _str) {
+VOID k_putstr(const CHAR* _str) {
     while (*_str != '\0') {
         k_putchr(*_str);
 
@@ -42,9 +42,9 @@ void k_putstr(const char* _str) {
 
 
 // overloads
-void k_putchr_rgb(const unsigned char _char, uint32_t _color) {
-    static int posi_x = char_width;
-    static int posi_y = char_height;
+void k_putchr_rgb(const CHAR _char, UI32 _color) {
+    static I32 posi_x = char_width;
+    static I32 posi_y = char_height;
 
     // CR
     if (_char == '\r') {
@@ -59,9 +59,9 @@ void k_putchr_rgb(const unsigned char _char, uint32_t _color) {
         return;
     }
 
-    int cx, cy;
-    int mask[8] = { 1, 2, 4, 8, 16, 32, 64, 128 };
-    unsigned char* glyph = FONT + _char * 16ULL;
+    I32 cx, cy;
+    I32 mask[8] = { 1, 2, 4, 8, 16, 32, 64, 128 };
+    BYTE* glyph = FONT + _char * 16ULL;
 
     for (cy = 0; cy < 16; ++cy) {
         for (cx = 0; cx < 8; ++cx) {
@@ -73,7 +73,7 @@ void k_putchr_rgb(const unsigned char _char, uint32_t _color) {
     posi_x += 8;
 }
 
-void k_putstr_rgb(const char* _str, uint32_t _color) {
+void k_putstr_rgb(const CHAR* _str, DWORD _color) {
     while (*_str != '\0') {
         k_putchr_rgb(*_str, _color);
 

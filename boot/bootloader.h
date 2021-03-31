@@ -1,8 +1,7 @@
 #pragma once
 
-#include <stdint.h>
-#include <elf.h>
 
+#include <elf.h>
 
 #include <Uefi.h>
 #include <Guid/Acpi.h>
@@ -13,6 +12,7 @@
 #include <Library/BaseMemoryLib.h>
 #include <Library/UefiBootServicesTableLib.h>
 
+#include "types.h"
 #include "protocol/stiletto.h"
 
 #define KERNEL_ABS_PATH    L"\\sys\\kernel"

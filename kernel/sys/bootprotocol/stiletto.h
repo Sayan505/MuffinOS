@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include <stdint.h>
+#include <sys/stdtypes.h>
 
 
 // boot protocol

@@ -1,11 +1,11 @@
 #pragma once
 
 
-#include <stdint.h>
+#include <sys/stdtypes.h>
 
 
 #include <sys/bootprotocol/stiletto_video.h>
 
 // instances
 extern stiletto_video_t video;
-extern uint32_t         color;
+extern UI32            color;

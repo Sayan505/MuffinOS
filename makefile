@@ -107,6 +107,7 @@ CFLAGS = -target x86_64-unknown-none-elf64 	\
 		 -Wpedantic							\
 		 -ffreestanding						\
 		 -nostdlib							\
+		 -nostdinc							\
 		 -nodefaultlibs						\
 		 -fno-pic							\
 		 -fno-stack-protector				\

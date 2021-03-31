@@ -16,6 +16,7 @@
   boot/protocol/stiletto_video.h
   boot/protocol/stiletto_acpi.h
   boot/protocol/stiletto_memory.h
+  boot/types.h
 
 [Packages]
   MdePkg/MdePkg.dec

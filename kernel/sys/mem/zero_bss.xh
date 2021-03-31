@@ -1,0 +1,6 @@
+// ensure static vars are zeroed out
+
+#pragma once
+
+
+//x
