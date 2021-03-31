@@ -76,7 +76,7 @@ And, so on...
 ## Build MuffinBoot UEFI bootloader
 ### &nbsp; Requirements
 * Atleast GCC5 (build-essential)
-* uuid-dev / uuid-devel
+* uuid-dev / libuuid-devel
 * iasl
 * nasm
 * python3-distutils
