@@ -3,22 +3,30 @@
 */
 
 
-#include <kernel/kernel.h>
-
+#include <kernel.h>
+#include <sys/debug/debug.h>
 
 __attribute__((noreturn))
 void start_kernel(stiletto_t *stiletto) {
+    
+    // init serial
+    init_com1();
+
+    com1_out('O');
+    com1_out('K');
+
+
+    // init video
     init_video(stiletto->stiletto_video);
 
     clr_scr();
 
     k_putstr("MEOWWWWM!\n\r");
-
-
-    init_com1();
     
-    com1_out('O');
-    com1_out('K');
+    //INT3;
+
+
+
 
     __endkernel__: goto __endkernel__;    // end of kernel
 }
