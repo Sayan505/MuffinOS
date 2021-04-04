@@ -11,3 +11,6 @@ dkms.conf
 build/
 !boot/build/
 edk2/
+
+# garbage
+.vscode/settings.json

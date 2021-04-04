@@ -39,7 +39,7 @@ SECTIONS
     {
         __LNK_SYM_bss_start = .;
         *(.bss)
-        LONG(0)     /*"The LONG(0) forces the bss section to be written to the file."*/
+        LONG(0)     /* "The LONG(0) forces the bss section to be written to the file." */
         __LNK_SYM_bss_end   = .;
 
         *(COMMON)

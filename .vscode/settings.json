@@ -1,6 +1,0 @@
-{
-    "files.associations": {
-        "kernel.h": "c",
-        "zero_bss.h": "c"
-    }
-}

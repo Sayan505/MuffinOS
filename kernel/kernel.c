@@ -4,7 +4,7 @@
 
 
 #include <kernel.h>
-#include <sys/debug/debug.h>
+
 
 __attribute__((noreturn))
 void start_kernel(stiletto_t *stiletto) {
@@ -23,10 +23,6 @@ void start_kernel(stiletto_t *stiletto) {
 
     k_putstr("MEOWWWWM!\n\r");
     
-    //INT3;
-
-
-
 
     __endkernel__: goto __endkernel__;    // end of kernel
 }
