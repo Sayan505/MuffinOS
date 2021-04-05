@@ -154,7 +154,7 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
     
     
     // ExitBootServices()
-    efi_status = gBS->ExitBootServices(ImageHandle, efi_mem_map_key);
+    gBS->ExitBootServices(ImageHandle, efi_mem_map_key);
 
     
     // READY!
