@@ -22,7 +22,7 @@ UI32 is_serial_bus_clear(UI16 port) {
     return inb(port + 5) & 0x20;
 }
 
-VOID serial_char_out(UI16 port, BYTE datb) {
+VOID serial_char_out(UI16 port, char datb) {
     while (is_serial_bus_clear(port) == 0);
 
     outb(port, datb);
@@ -36,4 +36,14 @@ BYTE serial_char_in(UI16 port) {
     while(is_serial_recv(port) == 0);
 
     return inb(port);
+}
+
+
+VOID serial_str_out(UI16 port, char* strb) {
+    int i = 0;
+
+    while(*(strb + i)) {
+        serial_char_out(port, *(strb + i));
+        ++i;
+    }
 }

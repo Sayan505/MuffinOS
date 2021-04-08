@@ -12,8 +12,7 @@ void start_kernel(stiletto_t *stiletto) {
     // init serial
     init_com1();
 
-    com1_out('O');
-    com1_out('K');
+    com1_outs("OK");
 
 
     // init video
@@ -22,7 +21,7 @@ void start_kernel(stiletto_t *stiletto) {
     clr_scr();
 
     k_putstr("MEOWWWWM!\n\r");
-    
+
 
     __endkernel__: goto __endkernel__;    // end of kernel
 }
